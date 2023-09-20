@@ -9,14 +9,14 @@ function CrudApp() {
   const [isEditModalVisible, setEditModalVisible] = useState(false);
   const [isDeleteModalVisible, setDeleteModalVisible] = useState(false);
 
-  const addItem = () => {
+  const criarItem = () => {
     if (inputValue.trim() !== '') {
       setItems([...items, inputValue]);
       setInputValue('');
     }
   };
 
-  const deleteItem = () => {
+  const apagarItem = () => {
     const newItems = [...items];
     newItems.splice(selectedItemIndex, 1);
     setItems(newItems);
@@ -24,18 +24,18 @@ function CrudApp() {
     setSelectedItemIndex(null);
   };
 
-  const openDeleteModal = (index) => {
+  const abrirModalApagar = (index) => {
     setSelectedItemIndex(index);
     setDeleteModalVisible(true);
   };
 
-  const openEditModal = (index) => {
+  const abrirModalAlterar = (index) => {
     setSelectedItemIndex(index);
     setEditValue(items[index]);
     setEditModalVisible(true);
   };
 
-  const editItem = () => {
+  const alterarItem = () => {
     const newItems = [...items];
     newItems[selectedItemIndex] = editValue;
     setItems(newItems);
@@ -52,7 +52,7 @@ function CrudApp() {
         onChangeText={(text) => setInputValue(text)}
         placeholder="Adicionar um item"
       />
-      <Button title="Adicionar" onPress={addItem} />
+      <Button title="Adicionar" onPress={criarItem} />
       <FlatList
       style={{ height: 40, borderColor: 'lightblue', borderWidth: 1, width: 200, margin: 10 }}
         data={items}
@@ -60,10 +60,10 @@ function CrudApp() {
         renderItem={({ item, index }) => (
           <View>
             <Text>{item}</Text>
-            <TouchableOpacity onPress={() => openDeleteModal(index)}>
+            <TouchableOpacity onPress={() => abrirModalApagar(index)}>
               <Text style={{ color: 'red' }}>Excluir</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => openEditModal(index)}>
+            <TouchableOpacity onPress={() => abrirModalAlterar(index)}>
               <Text style={{ color: 'green' }}>Editar</Text>
             </TouchableOpacity>
           </View>
@@ -80,7 +80,7 @@ function CrudApp() {
             />
             <TouchableOpacity
               style={{ backgroundColor: 'blue', padding: 10, borderRadius: 5 }}
-              onPress={editItem}
+              onPress={alterarItem}
             >
               <Text style={{ color: 'white' }}>Salvar</Text>
             </TouchableOpacity>
@@ -98,7 +98,7 @@ function CrudApp() {
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
           <View style={{ backgroundColor: 'white', padding: 20, borderRadius: 10 }}>
             <Text>Tem certeza que deseja excluir?</Text>
-            <Button title="Sim" onPress={deleteItem} />
+            <Button title="Sim" onPress={apagarItem} />
             <Button title="Não" color="red" onPress={() => setDeleteModalVisible(false)} />
           </View>
         </View>
